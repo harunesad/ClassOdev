@@ -11,6 +11,11 @@ public class EnemyControl : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.gameManager.gameOver)
+        {
+            Destroy(GetComponent<Animator>());
+            return;
+        }
         if (transform.position.x > 6.5f)
         {
             enemyAnim.SetBool("Reverse", true);

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
@@ -11,7 +10,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
     [SerializeField] TextMeshProUGUI scoreText, highScoreText, lastScoreText;
-    [SerializeField] Button restartButton, exitButton;
     [SerializeField] GameObject gameOverPanel;
     int coinCount;
     string coinKey = "Coin";
@@ -20,11 +18,13 @@ public class PlayerControl : MonoBehaviour
     {
         coinCount = 0;
         scoreText.text = "" + coinCount;
-        restartButton.onClick.AddListener(RestartGame);
-        exitButton.onClick.AddListener(ExitGame);
     }
     private void FixedUpdate()
     {
+        if (GameManager.gameManager.gameOver)
+        {
+            return;
+        }
         float h = Input.GetAxis("Horizontal");
         Mover(h);
         PlayerAnimation(h);
@@ -54,23 +54,10 @@ public class PlayerControl : MonoBehaviour
             highScoreText.text = "Best Score: " + PlayerPrefs.GetInt(coinKey);
             lastScoreText.text = "Score: " + coinCount;
             gameOverPanel.SetActive(true);
-            //Destroy(gameObject, 0.5f);
-            Time.timeScale = 0;
+            Destroy(gameObject, 0.5f);
+            GameManager.gameManager.gameOver = true;
         }
     }
-    #region Restart Game
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1;
-    }
-    #endregion
-    #region Exit Game
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
-    #endregion
     #region Character Move
     void Mover(float horizontal)
     {
