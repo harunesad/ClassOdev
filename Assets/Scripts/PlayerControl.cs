@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] float speed = 10;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI scoreText, highScoreText, lastScoreText;
+    [SerializeField] Button restartButton, exitButton;
+    [SerializeField] GameObject gameOverPanel;
     int coinCount;
     string coinKey = "Coin";
     bool run = false;
     private void Start()
     {
-        coinCount = PlayerPrefs.GetInt(coinKey);
+        coinCount = 0;
         scoreText.text = "" + coinCount;
+        restartButton.onClick.AddListener(RestartGame);
+        exitButton.onClick.AddListener(ExitGame);
     }
     private void FixedUpdate()
     {
@@ -29,18 +35,42 @@ public class PlayerControl : MonoBehaviour
         if (collision.CompareTag("Coin"))
         {
             coinCount += 5;
-            PlayerPrefs.SetInt(coinKey, coinCount);
             scoreText.text = "" + coinCount;
             Destroy(collision.gameObject, 0.2f);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Dead(collision);
+    }
+    void Dead(Collision2D collision)
+    {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject, 0.5f);
+            if (coinCount >= PlayerPrefs.GetInt(coinKey))
+            {
+                PlayerPrefs.SetInt(coinKey, coinCount);
+            }
+            highScoreText.text = "Best Score: " + PlayerPrefs.GetInt(coinKey);
+            lastScoreText.text = "Score: " + coinCount;
+            gameOverPanel.SetActive(true);
+            //Destroy(gameObject, 0.5f);
+            Time.timeScale = 0;
         }
     }
+    #region Restart Game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
+    }
+    #endregion
+    #region Exit Game
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    #endregion
     #region Character Move
     void Mover(float horizontal)
     {

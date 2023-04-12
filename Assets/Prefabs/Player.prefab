@@ -50,6 +50,7 @@ MonoBehaviour:
   isGround: 1
   rb2D: {fileID: 7252445889409247627}
   jumpSpeed: 10
+  doubleJump: 0
 --- !u!1 &7252445889409247623
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +203,9 @@ MonoBehaviour:
   rb: {fileID: 7252445889409247627}
   animator: {fileID: 1503557516}
   scoreText: {fileID: 0}
+  highScoreText: {fileID: 0}
+  lastScoreText: {fileID: 0}
+  gameOverPanel: {fileID: 0}
 --- !u!95 &1503557516
 Animator:
   serializedVersion: 4

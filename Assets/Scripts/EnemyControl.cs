@@ -11,11 +11,11 @@ public class EnemyControl : MonoBehaviour
     }
     void Update()
     {
-        if (transform.position.x > 7)
+        if (transform.position.x > 6.5f)
         {
             enemyAnim.SetBool("Reverse", true);
         }
-        if(transform.position.x < 3)
+        if(transform.position.x < 4)
         {
             enemyAnim.SetBool("Reverse", false);
         }
