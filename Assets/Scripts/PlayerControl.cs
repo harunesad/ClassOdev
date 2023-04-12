@@ -54,8 +54,11 @@ public class PlayerControl : MonoBehaviour
             highScoreText.text = "Best Score: " + PlayerPrefs.GetInt(coinKey);
             lastScoreText.text = "Score: " + coinCount;
             gameOverPanel.SetActive(true);
+            animator.SetBool("Run", false);
             Destroy(gameObject, 0.5f);
             GameManager.gameManager.isStarted = false;
+            EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
+            enemyControl.GetComponent<Animator>().SetFloat("Rotate", 1);
         }
     }
     #region Character Move

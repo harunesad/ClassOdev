@@ -9,10 +9,6 @@ public class IsGround : MonoBehaviour
     [SerializeField] Rigidbody2D rb2D;
     [SerializeField] float jumpSpeed = 10;
     public bool doubleJump;
-    void Start()
-    {
-        
-    }
     void Update()
     {
         if (!GameManager.gameManager.isStarted)
@@ -33,19 +29,10 @@ public class IsGround : MonoBehaviour
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
         }
-        //else if (!doubleJump && Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    doubleJump = true;
-        //}
         else if (!doubleJump && Input.GetKeyDown(KeyCode.Space))
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
             doubleJump = true;
         }
-    }
-    private void FixedUpdate()
-    {
-
-
     }
 }//Class

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     [SerializeField] Button restartButton, exitButton, startButton;
+    [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] GameObject startPanel;
     //public bool gameOver = false;
     public bool isStarted = false;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
         restartButton.onClick.AddListener(RestartGame);
         exitButton.onClick.AddListener(ExitGame);
         startButton.onClick.AddListener(StartGame);
+        bestScoreText.text = "Best Score: " + PlayerPrefs.GetInt("Coin");
     }
     void Update()
     {
@@ -43,6 +46,9 @@ public class GameManager : MonoBehaviour
     {
         isStarted = true;
         startPanel.SetActive(false);
+        EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
+        enemyControl.GetComponent<Animator>().SetFloat("Rotate", 2);
+        enemyControl.GetComponent<Animator>().SetBool("Reverse", true);
     }
     #endregion
 }
