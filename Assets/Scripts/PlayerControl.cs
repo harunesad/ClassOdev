@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GameManager.gameManager.gameOver)
+        if (!GameManager.gameManager.isStarted)
         {
             return;
         }
@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour
             lastScoreText.text = "Score: " + coinCount;
             gameOverPanel.SetActive(true);
             Destroy(gameObject, 0.5f);
-            GameManager.gameManager.gameOver = true;
+            GameManager.gameManager.isStarted = false;
         }
     }
     #region Character Move

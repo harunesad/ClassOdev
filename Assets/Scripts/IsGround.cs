@@ -15,6 +15,10 @@ public class IsGround : MonoBehaviour
     }
     void Update()
     {
+        if (!GameManager.gameManager.isStarted)
+        {
+            return;
+        }
         RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, 0.25f, mask);
         if (raycastHit2D.collider != null)
         {

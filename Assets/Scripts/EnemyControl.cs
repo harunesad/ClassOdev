@@ -11,9 +11,10 @@ public class EnemyControl : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.gameManager.gameOver)
+        if (!GameManager.gameManager.isStarted)
         {
-            Destroy(GetComponent<Animator>());
+            //Destroy(GetComponent<Animator>());
+
             return;
         }
         if (transform.position.x > 6.5f)

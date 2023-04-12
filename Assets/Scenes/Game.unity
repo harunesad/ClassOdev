@@ -2550,7 +2550,9 @@ MonoBehaviour:
   restartButton: {fileID: 1104194127}
   exitButton: {fileID: 1848668662}
   startButton: {fileID: 434890129}
+  startPanel: {fileID: 1319634750}
   gameOver: 0
+  isStarted: 0
 --- !u!4 &1485616546
 Transform:
   m_ObjectHideFlags: 0

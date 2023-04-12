@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     [SerializeField] Button restartButton, exitButton, startButton;
-    public bool gameOver = false;
+    [SerializeField] GameObject startPanel;
+    //public bool gameOver = false;
+    public bool isStarted = false;
     private void Awake()
     {
         gameManager = this;
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         restartButton.onClick.AddListener(RestartGame);
         exitButton.onClick.AddListener(ExitGame);
+        startButton.onClick.AddListener(StartGame);
     }
     void Update()
     {
@@ -33,6 +36,13 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    #endregion
+    #region Start Game
+    public void StartGame()
+    {
+        isStarted = true;
+        startPanel.SetActive(false);
     }
     #endregion
 }
