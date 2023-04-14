@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] float speed = 10;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] Animator animator;
+    [SerializeField] Animator animator, chestAnimator;
     [SerializeField] TextMeshProUGUI scoreText, highScoreText, lastScoreText;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] AudioSource deathSound, coinSound;
@@ -41,11 +41,23 @@ public class PlayerControl : MonoBehaviour
         {
             CoinCollect(collision, 15);
         }
+        if (collision.CompareTag("Chest"))
+        {
+            chestAnimator.SetBool("Open", true);
+            StartCoroutine(ChestAnimation());
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Dead(collision.gameObject);
     }
+    #region ChestAnimation
+    IEnumerator ChestAnimation()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    #endregion
     #region CoinCollect
     void CoinCollect(Collider2D collision, int ınc)
     {

@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
         if (isRestart)
         {
             startPanel.SetActive(false);
+            EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
+            enemyControl.GetComponent<Animator>().SetBool("Reverse", true);
+            enemyControl.GetComponent<Animator>().SetFloat("Rotate", 2);
         }
         restartButton.onClick.AddListener(RestartGame);
         firstExitButton.onClick.AddListener(ExitGame);
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         isRestart = true;
         //Time.timeScale = 0;
+        isStarted = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion

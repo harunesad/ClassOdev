@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Death
   - SuperCoin
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -50,6 +51,9 @@ TagManager:
     locked: 0
   - name: Coin
     uniqueID: 3700721253
+    locked: 0
+  - name: Chest
+    uniqueID: 715897283
     locked: 0
   - name: Player
     uniqueID: 2827815657
