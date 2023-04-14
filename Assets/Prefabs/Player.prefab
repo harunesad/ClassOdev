@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3600640656957141212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0}
+  m_LocalPosition: {x: 0, y: -0.441, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 7252445889409247625}
   - component: {fileID: 7252445889409247622}
   - component: {fileID: 7252445889409247627}
-  - component: {fileID: 7252445889409247624}
+  - component: {fileID: 5511226418746977431}
   - component: {fileID: 7309189566607828022}
   - component: {fileID: 1503557516}
   m_Layer: 6
@@ -161,7 +161,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &7252445889409247624
+--- !u!61 &5511226418746977431
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,14 +178,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.44, y: 1.46}
+    oldSize: {x: 1.125, y: 1.140625}
     newSize: {x: 1.44, y: 1.46}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.44, y: 1.46}
+  m_Size: {x: 1.125, y: 1.140625}
   m_EdgeRadius: 0
 --- !u!114 &7309189566607828022
 MonoBehaviour:
@@ -206,6 +206,8 @@ MonoBehaviour:
   highScoreText: {fileID: 0}
   lastScoreText: {fileID: 0}
   gameOverPanel: {fileID: 0}
+  deathSound: {fileID: 0}
+  coinSound: {fileID: 0}
 --- !u!95 &1503557516
 Animator:
   serializedVersion: 4

@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] TextMeshProUGUI scoreText, highScoreText, lastScoreText;
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] AudioSource deathSound, coinSound;
     int coinCount;
     string coinKey = "Coin";
     bool run = false;
@@ -21,7 +22,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!GameManager.gameManager.isStarted)
+        if (!GameManager.isStarted)
         {
             return;
         }
@@ -34,18 +35,30 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.CompareTag("Coin"))
         {
-            coinCount += 5;
-            scoreText.text = "" + coinCount;
-            Destroy(collision.gameObject, 0.2f);
+            CoinCollect(collision, 5);
+        }
+        if (collision.CompareTag("SuperCoin"))
+        {
+            CoinCollect(collision, 15);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Dead(collision);
+        Dead(collision.gameObject);
     }
-    void Dead(Collision2D collision)
+    #region CoinCollect
+    void CoinCollect(Collider2D collision, int ınc)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        coinCount += ınc;
+        scoreText.text = "" + coinCount;
+        coinSound.Play();
+        Destroy(collision.gameObject, 0.2f);
+    }
+    #endregion
+    #region Dead
+    void Dead(GameObject obj)
+    {
+        if (obj.CompareTag("Enemy") || obj.CompareTag("Death"))
         {
             if (coinCount >= PlayerPrefs.GetInt(coinKey))
             {
@@ -55,12 +68,14 @@ public class PlayerControl : MonoBehaviour
             lastScoreText.text = "Score: " + coinCount;
             gameOverPanel.SetActive(true);
             animator.SetBool("Run", false);
+            deathSound.Play();
             Destroy(gameObject, 0.5f);
-            GameManager.gameManager.isStarted = false;
+            GameManager.isStarted = false;
             EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
             enemyControl.GetComponent<Animator>().SetFloat("Rotate", 1);
         }
     }
+    #endregion
     #region Character Move
     void Mover(float horizontal)
     {

@@ -5,19 +5,20 @@ using UnityEngine;
 public class EnemyControl : MonoBehaviour
 {
     [SerializeField] Animator enemyAnim;
+    [SerializeField] float minX, maxX;
     void Update()
     {
-        if (!GameManager.gameManager.isStarted)
+        if (!GameManager.isStarted)
         {
             return;
         }
-        if (transform.position.x > 6)
-        {
-            enemyAnim.SetBool("Reverse", true);
-        }
-        if (transform.position.x < 3)
+        if (transform.position.x > maxX)
         {
             enemyAnim.SetBool("Reverse", false);
+        }
+        if (transform.position.x < minX)
+        {
+            enemyAnim.SetBool("Reverse", true);
         }
     }
 }

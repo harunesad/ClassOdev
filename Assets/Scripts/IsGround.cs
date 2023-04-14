@@ -11,7 +11,7 @@ public class IsGround : MonoBehaviour
     public bool doubleJump;
     void Update()
     {
-        if (!GameManager.gameManager.isStarted)
+        if (!GameManager.isStarted)
         {
             return;
         }

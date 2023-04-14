@@ -7,20 +7,26 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager gameManager;
-    [SerializeField] Button restartButton, exitButton, startButton;
+    //public static GameManager gameManager;
+    [SerializeField] Button restartButton, lastExitButton, startButton, firstExitButton;
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] GameObject startPanel;
     //public bool gameOver = false;
-    public bool isStarted = false;
-    private void Awake()
-    {
-        gameManager = this;
-    }
+    public static bool isStarted = false;
+    public static bool isRestart;
+    //private void Awake()
+    //{
+    //    gameManager = this;
+    //}
     void Start()
     {
+        if (isRestart)
+        {
+            startPanel.SetActive(false);
+        }
         restartButton.onClick.AddListener(RestartGame);
-        exitButton.onClick.AddListener(ExitGame);
+        firstExitButton.onClick.AddListener(ExitGame);
+        lastExitButton.onClick.AddListener(ExitGame);
         startButton.onClick.AddListener(StartGame);
         bestScoreText.text = "Best Score: " + PlayerPrefs.GetInt("Coin");
     }
@@ -31,8 +37,9 @@ public class GameManager : MonoBehaviour
     #region Restart Game
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1;
+        isRestart = true;
+        //Time.timeScale = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion
     #region Exit Game
@@ -47,8 +54,8 @@ public class GameManager : MonoBehaviour
         isStarted = true;
         startPanel.SetActive(false);
         EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
-        enemyControl.GetComponent<Animator>().SetFloat("Rotate", 2);
         enemyControl.GetComponent<Animator>().SetBool("Reverse", true);
+        enemyControl.GetComponent<Animator>().SetFloat("Rotate", 2);
     }
     #endregion
 }
