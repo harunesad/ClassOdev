@@ -13,12 +13,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] AudioSource deathSound, coinSound;
     int coinCount;
+    static int levelCount = 0;
     string coinKey = "Coin";
     bool run = false;
     private void Start()
     {
-        coinCount = 0;
-        scoreText.text = "" + coinCount;
+        scoreText.text = "" + levelCount;
     }
     private void FixedUpdate()
     {
@@ -62,7 +62,8 @@ public class PlayerControl : MonoBehaviour
     void CoinCollect(Collider2D collision, int ınc)
     {
         coinCount += ınc;
-        scoreText.text = "" + coinCount;
+        levelCount += ınc;
+        scoreText.text = "" + levelCount;
         coinSound.Play();
         Destroy(collision.gameObject, 0.2f);
     }
@@ -77,11 +78,12 @@ public class PlayerControl : MonoBehaviour
                 PlayerPrefs.SetInt(coinKey, coinCount);
             }
             highScoreText.text = "Best Score: " + PlayerPrefs.GetInt(coinKey);
-            lastScoreText.text = "Score: " + coinCount;
+            levelCount -= coinCount;
+            lastScoreText.text = "Score: " + levelCount;
             gameOverPanel.SetActive(true);
             animator.SetBool("Run", false);
             deathSound.Play();
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject);
             GameManager.isStarted = false;
             EnemyControl enemyControl = FindObjectOfType<EnemyControl>();
             enemyControl.GetComponent<Animator>().SetFloat("Rotate", 1);
